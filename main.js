@@ -11,6 +11,9 @@ const speedDown = 300;
 class GameScene extends Phaser.Scene {
   constructor() {
     super("scene-game");
+    this.basket;
+    this.cursor;
+    this.basketSpeedMove = 550;
   }
 
   preload() {
@@ -20,10 +23,23 @@ class GameScene extends Phaser.Scene {
 
   create() {
     this.add.image(0, 0, "background").setOrigin(0, 0);
-    this.add.image(0, 400, "basket").setOrigin(0, 0);
+    this.basket = this.physics.add.image(0, 420, "basket").setOrigin(0, 0);
+    this.basket.body.allowGravity = false;
+    this.basket.setCollideWorldBounds(true);
+    this.cursor = this.input.keyboard.createCursorKeys();
   }
 
-  update() {}
+  update() {
+    const { left, right } = this.cursor;
+
+    if (left.isDown) {
+      this.basket.setVelocityX(-this.basketSpeedMove);
+    } else if (right.isDown) {
+      this.basket.setVelocityX(this.basketSpeedMove);
+    } else {
+      this.basket.setVelocityX(0);
+    }
+  }
 }
 
 const config = {
