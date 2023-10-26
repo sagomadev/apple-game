@@ -8,9 +8,27 @@ const sizes = {
 
 const speedDown = 300;
 
+class GameScene extends Phaser.Scene {
+  constructor() {
+    super("scene-game");
+  }
+
+  preload() {
+    this.load.image("background", "./assets/bg.png");
+    this.load.image("basket", "./assets/basket.png");
+  }
+
+  create() {
+    this.add.image(0, 0, "background").setOrigin(0, 0);
+    this.add.image(0, 400, "basket").setOrigin(0, 0);
+  }
+
+  update() {}
+}
+
 const config = {
   type: Phaser.WEBGL,
-  with: sizes.width,
+  width: sizes.width,
   height: sizes.height,
   canvas: gameCanvas,
   physics: {
@@ -20,6 +38,7 @@ const config = {
       debug: true,
     },
   },
+  scene: [GameScene],
 };
 
 const game = new Phaser.Game(config);
