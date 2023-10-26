@@ -14,11 +14,14 @@ class GameScene extends Phaser.Scene {
     this.basket;
     this.cursor;
     this.basketSpeedMove = 550;
+
+    this.target;
   }
 
   preload() {
     this.load.image("background", "./assets/bg.png");
     this.load.image("basket", "./assets/basket.png");
+    this.load.image("apple", "./assets/apple.png");
   }
 
   create() {
@@ -27,6 +30,8 @@ class GameScene extends Phaser.Scene {
     this.basket.body.allowGravity = false;
     this.basket.setCollideWorldBounds(true);
     this.cursor = this.input.keyboard.createCursorKeys();
+    this.target = this.physics.add.image(0, 0, "apple").setOrigin(0, 0);
+    this.target.setMaxVelocity(0, speedDown);
   }
 
   update() {
@@ -38,6 +43,11 @@ class GameScene extends Phaser.Scene {
       this.basket.setVelocityX(this.basketSpeedMove);
     } else {
       this.basket.setVelocityX(0);
+    }
+
+    if (this.target.y >= sizes.height) {
+      this.target.setY(Math.random() * (sizes.height * 0.5) + 50);
+      this.target.setX(Math.random() * (sizes.width * 0.85) + 50);
     }
   }
 }
