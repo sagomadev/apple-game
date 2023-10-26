@@ -46,9 +46,17 @@ class GameScene extends Phaser.Scene {
     }
 
     if (this.target.y >= sizes.height) {
-      this.target.setY(Math.random() * (sizes.height * 0.5) + 50);
-      this.target.setX(Math.random() * (sizes.width * 0.85) + 50);
+      const { posX, posY } = this.getRandomPosition();
+      this.target.setY(posY);
+      this.target.setX(posX);
     }
+  }
+
+  getRandomPosition() {
+    return {
+      posX: Math.floor(Math.random() * 450),
+      posY: Math.floor(Math.random() * 280),
+    };
   }
 }
 
